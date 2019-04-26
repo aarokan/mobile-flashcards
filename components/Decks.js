@@ -1,7 +1,6 @@
 import React , { Component } from 'react'
-import { View } from 'react-native'
-import Deck from './Deck'
-import TextButton from './TextButton'
+import { View, TouchableOpacity } from 'react-native'
+import DeckDetail from './DeckDetail'
 
 
 
@@ -55,18 +54,17 @@ export default class Decks extends Component {
                     const { title, questions } = this.state[key]
 
                     return (
-                        <Deck
+                      <TouchableOpacity 
+                        onPress={() => this.props.navigation.navigate('Deck',{ title, questions })}
+                        key={title} >
+                        <DeckDetail
                             key={title}
                             title={title}
                             questions={questions}
                         />
+                      </TouchableOpacity>
                     )
                 })}
-                <TextButton 
-                  onPress={this.submit}
-                  style={{margin: 20}}>
-                  ADD NEW DECK
-                </TextButton>
             </View>
         )
     }

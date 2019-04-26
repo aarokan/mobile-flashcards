@@ -1,12 +1,27 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { Component } from 'react'
+import { View } from 'react-native'
+import DeckDetail from './DeckDetail'
+import TextButton from './TextButton'
 
-export default function Deck ({ title, questions }) {
-    const cardsStr = questions.length > 1 ? 'cards' : 'card'
-    return (
-        <View>
-            <Text>{title}</Text>
-            <Text>{`${questions.length} ${cardsStr}`}</Text>
-        </View>
-    )
+
+
+class Deck extends Component {
+    render () {
+        const title = this.props.navigation.state.params.title
+        return (
+            <View>
+                <DeckDetail 
+                    title={title}
+                    questions={this.props.navigation.state.params.questions} />
+                <TextButton 
+                    onPress={() => this.props.navigation.navigate('NewCard',{ title })}
+                    style={{margin: 20}}>
+                    ADD CARD
+                </TextButton>
+            </View>
+        )
+    }
 }
+
+export default Deck
+    
