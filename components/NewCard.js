@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, TextInput } from 'react-native' 
 import TextButton from './TextButton'
+import { addCardToDeck } from '../utils/api'
+import { NavigationActions } from 'react-navigation'
 
 export default class NewCard extends Component {
     state = {
@@ -9,7 +11,15 @@ export default class NewCard extends Component {
     }
 
     submit = (title) => {
-        alert(title)
+        //addCardToDeck(title, this.state)
+        //this.props.navigation.goBack()
+        this.toHome()
+    }
+
+    toHome = () => {
+        this.props.navigation.dispatch(NavigationActions.navigate({
+            routeName: 'Home'
+        }))
     }
 
     handleQuestionChange = (question) => {

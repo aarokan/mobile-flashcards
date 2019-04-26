@@ -7,6 +7,7 @@ import {
     TextInput
 } from 'react-native'
 import TextButton from './TextButton'
+import { saveDeckTitle } from '../utils/api'
 
 export default class NewDeck extends Component {
     state = {
@@ -14,9 +15,9 @@ export default class NewDeck extends Component {
     }
 
     submit = () => {
-        // Add new deck
-        // Navigate to Deck
-        alert('Hello')
+        //saveDeckTitle(this.state.title)  // promise !!!
+        // Navigate back
+        this.props.navigation.goBack()  
     }
 
     handleTextChange = (title) => {

@@ -19,10 +19,10 @@ return (
 }
 
 const Tabs = TabNavigator({
-  Home: {
+  Decks: {
     screen: Decks,
     navigationOptions: {
-      tabBarLabel: 'Home',
+      tabBarLabel: 'Decks',
       tabBarIcon: ({ tintColor }) => <FontAwesome name='home' size={30} color={tintColor} />
 
     }

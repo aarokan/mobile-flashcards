@@ -1,34 +1,24 @@
 import React , { Component } from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import DeckDetail from './DeckDetail'
+import { getDecks } from '../utils/api'
+import { AppLoading } from 'expo'
+
 
 
 
 export default class Decks extends Component {
     state = {
-            React: {
-              title: 'React',
-              questions: [
-                {
-                  question: 'What is React?',
-                  answer: 'A library for managing user interfaces'
-                },
-                {
-                  question: 'Where do you make Ajax requests in React?',
-                  answer: 'The componentDidMount lifecycle event'
-                }
-              ]
-            },
-            JavaScript: {
-              title: 'JavaScript',
-              questions: [
-                {
-                  question: 'What is a closure?',
-                  answer: 'The combination of a function and the lexical environment within which that function was declared.'
-                }
-              ]
-            }
-          }
+      decks : {}
+    }
+      
+    componentDidMount () {
+      getDecks()
+        .then((decks) => this.setState(() => ({ decks })))
+    }
+
+        
+    
 /*
     addDeck = (deck) => {
         // todo : check that we cannot add a deck with an already existing title !!!!
@@ -48,24 +38,29 @@ export default class Decks extends Component {
     }
     
     render () {
-        return (
-            <View>
-                {Object.keys(this.state).map((key) => {
-                    const { title, questions } = this.state[key]
+  
+      if ( this.state === {} ) {
+        return <AppLoading />
+      }
 
-                    return (
-                      <TouchableOpacity 
-                        onPress={() => this.props.navigation.navigate('Deck',{ title, questions })}
-                        key={title} >
-                        <DeckDetail
-                            key={title}
-                            title={title}
-                            questions={questions}
-                        />
-                      </TouchableOpacity>
-                    )
-                })}
-            </View>
-        )
+      const { decks } = this.state
+      return (  
+        <View>
+          {Object.keys(decks).map((key) => {
+            const { title, questions } = decks[key]
+            return (
+              <TouchableOpacity 
+                onPress={() => this.props.navigation.navigate('Deck',{ title, questions })}
+                key={title} >
+                <DeckDetail
+                  key={title}
+                  title={title}
+                  questions={questions}
+                />
+              </TouchableOpacity>
+            )
+          })}
+        </View>
+      )
     }
 }
