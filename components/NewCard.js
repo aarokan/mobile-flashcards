@@ -12,7 +12,7 @@ export default class NewCard extends Component {
 
     submit = (title) => {
         //addCardToDeck(title, this.state)
-        //this.props.navigation.goBack()
+        // this.props.navigation.goBack()
         this.toHome()
     }
 

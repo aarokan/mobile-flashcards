@@ -1,23 +1,33 @@
 import React, { Component } from 'react'
 import {
     StyleSheet,
-    View,
     Text,
     KeyboardAvoidingView,
     TextInput
 } from 'react-native'
 import TextButton from './TextButton'
 import { saveDeckTitle } from '../utils/api'
+import { connect } from 'react-redux'
+import { addDeck } from '../actions'
 
-export default class NewDeck extends Component {
+class NewDeck extends Component {
     state = {
         title: ''
     }
 
     submit = () => {
-        //saveDeckTitle(this.state.title)  // promise !!!
-        // Navigate back
-        this.props.navigation.goBack()  
+        const { title }  = this.state
+
+        this.props.dispatch(addDeck(title))
+        this.setState(() => ({
+            title: ''
+        }))
+
+        // Navigate to home
+        this.props.navigation.goBack()
+        
+        saveDeckTitle(title)
+
     }
 
     handleTextChange = (title) => {
@@ -29,7 +39,9 @@ export default class NewDeck extends Component {
     render () {
         const { title } = this.state
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView
+                behavior='padding' 
+                style={styles.container}>
                 <Text>{`Title of New Deck : ${title}`}</Text>
                 <TextInput
                     value={title}
@@ -40,7 +52,7 @@ export default class NewDeck extends Component {
                   style={{margin: 20}}>
                   SUBMIT
                 </TextButton>
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }
@@ -64,3 +76,5 @@ const styles = StyleSheet.create({
     }
 
 })
+
+export default connect()(NewDeck)

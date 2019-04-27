@@ -3,19 +3,33 @@ import { View, TouchableOpacity } from 'react-native'
 import DeckDetail from './DeckDetail'
 import { getDecks } from '../utils/api'
 import { AppLoading } from 'expo'
+import { connect } from 'react-redux'
+import { receiveDecks } from '../actions'
 
 
+class Decks extends Component {
 
-
-export default class Decks extends Component {
-    state = {
-      decks : {}
+    state = {  
+      ready : false
     }
       
     componentDidMount () {
+      const { dispatch } = this.props
+
       getDecks()
-        .then((decks) => this.setState(() => ({ decks })))
+        .then((decks) => dispatch(receiveDecks(decks)))
+        .then(() => this.setState(() => ({ 
+          ready : true 
+        })))
     }
+/*
+    getDecks()
+        .then((decks) => { 
+          this.setState(() => ({ decks, ready : true }))
+        })
+      }
+*/
+  
 
         
     
@@ -31,20 +45,17 @@ export default class Decks extends Component {
     }
 
   */
-
-    submit = () => {
-      // Navigate to newDeck
-      alert('Hello')
-    }
     
     render () {
-  
-      if ( this.state === {} ) {
+
+      const { decks } = this.props
+      const { ready } = this.state
+      
+      if (ready === false)  {
         return <AppLoading />
       }
-
-      const { decks } = this.state
-      return (  
+      
+      return (         
         <View>
           {Object.keys(decks).map((key) => {
             const { title, questions } = decks[key]
@@ -60,7 +71,15 @@ export default class Decks extends Component {
               </TouchableOpacity>
             )
           })}
-        </View>
+        </View> 
       )
     }
 }
+
+function mapStateToProps (decks) {
+  return {
+    decks
+  }
+}
+
+export default connect(mapStateToProps)(Decks)
