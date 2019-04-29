@@ -9,7 +9,7 @@ class Deck extends Component {
     render () {
         const { title, cards } = this.props.navigation.state.params
         return (
-            <View>
+            <View style={{flex: 1, justifyContent: 'center'}}>
                 <DeckDetail 
                     title={title}
                     cards={cards} />

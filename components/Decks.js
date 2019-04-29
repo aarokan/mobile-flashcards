@@ -1,5 +1,5 @@
 import React , { Component } from 'react'
-import { View, ScrollView, TouchableOpacity } from 'react-native'
+import { View, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
 import DeckDetail from './DeckDetail'
 import { getDecks } from '../utils/api'
 import { AppLoading } from 'expo'
@@ -36,14 +36,15 @@ class Decks extends Component {
           {Object.keys(decks).map((key) => {
             const { title, cards } = decks[key]
             return (
-              <TouchableOpacity 
-                onPress={() => this.props.navigation.navigate('Deck',{ title, cards })}
-                key={title} >
-                <DeckDetail
-                  title={title}
-                  cards={cards}
-                />
-              </TouchableOpacity>
+              <View style={styles.item} key={title}>
+                <TouchableOpacity 
+                  onPress={() => this.props.navigation.navigate('Deck',{ title, cards })} >
+                  <DeckDetail
+                    title={title}
+                    cards={cards}
+                  />
+                </TouchableOpacity>
+              </View>
             )
           })}
 
@@ -52,6 +53,20 @@ class Decks extends Component {
     }
     
 }
+
+const styles = StyleSheet.create({
+  container : {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  item : {
+    paddingBottom: 6,
+    backgroundColor: '#fffaf0',
+    margin: 10,
+    borderRadius: 10,
+  }
+})
 
 function mapStateToProps (decks) {
   return {

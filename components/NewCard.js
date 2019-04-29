@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, KeyboardAvoidingView, TextInput } from 'react-native' 
+import { StyleSheet, View, KeyboardAvoidingView, Text, TextInput } from 'react-native' 
 import TextButton from './TextButton'
-import { addCardToDeck, getDecks } from '../utils/api'
+import { addCardToDeck } from '../utils/api'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 
 class NewCard extends Component {
     state = {
-        question: '',
-        answer: '',
+        question: 'Your question here',
+        answer: 'The answer here',
     }
 
     submit = (question, answer) => {
@@ -52,22 +52,29 @@ class NewCard extends Component {
     render () {
         const { question, answer } = this.state
         return (
-            <View>
-                <KeyboardAvoidingView style={styles.container}>
-                    <TextInput
-                        value={question}
-                        style={styles.input}
-                        onChangeText={this.handleQuestionChange}/>
-                </KeyboardAvoidingView>
-                <KeyboardAvoidingView>
-                    <TextInput
-                        value={answer}
-                        style={styles.input}
-                        onChangeText={this.handleAnswerChange}/>
-                </KeyboardAvoidingView>
+            <View style={styles.container}>
+                <View style={styles.input}>
+                    <Text>Your Question :</Text>
+                    <KeyboardAvoidingView >
+                        <TextInput
+                            value={question}
+                            style={styles.inputField}
+                            clearTextOnFocus={true}
+                            onChangeText={this.handleQuestionChange}/>
+                    </KeyboardAvoidingView>
+                </View>
+                <View style={styles.input}>
+                    <Text>The Answer :</Text>
+                    <KeyboardAvoidingView>
+                        <TextInput
+                            value={answer}
+                            style={styles.inputField}
+                            clearTextOnFocus={true}
+                            onChangeText={this.handleAnswerChange}/>
+                    </KeyboardAvoidingView>
+                </View>
                 <TextButton 
-                    onPress={() => {this.submit(question, answer)}}
-                    style={{margin: 20}}>
+                    onPress={() => {this.submit(question, answer)}}>
                     SUBMIT
                 </TextButton>
             </View>
@@ -86,12 +93,16 @@ const styles = StyleSheet.create({
         margin: 50,
     },
     input : {
-        width: 200,
-        height: 44,
+        flex: 1,
+        alignItems: 'center',
+    },
+    inputField : {
+        width: 225,
+        height: 40,
         padding: 8,
         borderWidth: 1,
         borderColor: '#757575',
-        margin: 50
+        margin: 8,
     }
 })
 
