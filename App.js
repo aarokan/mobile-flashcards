@@ -4,6 +4,7 @@ import Decks from './components/Decks'
 import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
 import NewCard from './components/NewCard'
+import ClearAll from './components/ClearAll'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { purple, white } from './utils/colors'
 import { FontAwesome } from '@expo/vector-icons'
@@ -11,6 +12,7 @@ import { Constants } from 'expo'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
+
 
 
 function UdaciStatusBar ({ backgroundColor, ...props }) {
@@ -36,7 +38,14 @@ const Tabs = TabNavigator({
       tabBarLabel: 'Add Deck',
       tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
     }
-  }, 
+  },
+  ClearAll: {
+    screen: ClearAll,
+    navigationOptions: {
+      tabBarLabel: 'Clear',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name='trash' size={30} color={tintColor} />
+    }
+  } 
 }, {
   tabBarOptions: {
     activeTintColor: Platform.OS === 'ios' ? purple : white,
@@ -80,6 +89,7 @@ const MainNavigator = StackNavigator({
 })
  
 export default class App extends React.Component {
+
   render() {
     return (
       <Provider store={createStore(reducer)}>
@@ -89,7 +99,7 @@ export default class App extends React.Component {
         </View>      
       </Provider>
 
-    );
+    )
   }
 }
 

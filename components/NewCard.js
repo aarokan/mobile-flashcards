@@ -1,19 +1,34 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, TextInput } from 'react-native' 
+import { StyleSheet, KeyboardAvoidingView, TextInput } from 'react-native' 
 import TextButton from './TextButton'
-import { addCardToDeck } from '../utils/api'
+import { addCardToDeck, getDecks } from '../utils/api'
 import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux'
+import { addDeck } from '../actions'
 
-export default class NewCard extends Component {
+class NewCard extends Component {
     state = {
         question: '',
         answer: '',
     }
 
-    submit = (title) => {
-        //addCardToDeck(title, this.state)
-        // this.props.navigation.goBack()
-        this.toHome()
+    submit = (question, answer) => {
+
+        const { decks, dispatch }=  this.props
+        const { title } = this.props.navigation.state.params
+        const cards = [...decks[title].cards, {question, answer}]
+        const updatedDeck = {[title]: {title, cards}}
+
+        // update Redux
+        dispatch(addDeck(updatedDeck))
+
+        this.setState(() => ({
+            question: '',
+            answer: ''
+        }))
+        
+        // Save to "DB" & navigate to home
+        addCardToDeck(title, question, answer).then(() => { this.toHome() })
     }
 
     toHome = () => {
@@ -36,9 +51,8 @@ export default class NewCard extends Component {
 
     render () {
         const { question, answer } = this.state
-        const title = this.props.navigation.state.params.title
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container}>
                 <TextInput
                     value={question}
                     style={styles.input}
@@ -48,11 +62,11 @@ export default class NewCard extends Component {
                     style={styles.input}
                     onChangeText={this.handleAnswerChange}/>
                 <TextButton 
-                  onPress={() => {this.submit(title)}}
+                  onPress={() => {this.submit(question, answer)}}
                   style={{margin: 20}}>
                   SUBMIT
                 </TextButton>
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }
@@ -74,5 +88,10 @@ const styles = StyleSheet.create({
         borderColor: '#757575',
         margin: 50
     }
-
 })
+
+function mapStateToProps(decks) {
+    return { decks }
+}
+
+export default connect(mapStateToProps)(NewCard)

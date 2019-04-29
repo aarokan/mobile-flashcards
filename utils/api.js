@@ -7,33 +7,38 @@ export function saveDeckTitle ( title ) {
     return AsyncStorage.mergeItem(FLASHCARDS_KEY, JSON.stringify({ 
         [title]:{
             'title': title,
-            'questions': []
+            'cards': []
         }
     })) 
+}
+
+export function getDecks () {
+    return AsyncStorage.getItem(FLASHCARDS_KEY)
+    .then((results) => JSON.parse(results) )
+}
+
+export function getDeck (title) {
+    return getDecks()
+    .then((decks) => decks[title])
+}
+
+export function addCardToDeck(title, question, answer) {
+    return getDeck(title)
+    .then((deckContent) => {
+        updatedCards = [...deckContent.cards, {question, answer}]
+        return AsyncStorage.mergeItem(FLASHCARDS_KEY, JSON.stringify({
+            [title]: {
+                'title' : title,
+                'cards' : updatedCards
+            } 
+        }))
+    })
 }
 
 export function clearAsyncStorage () {
     return AsyncStorage.removeItem(FLASHCARDS_KEY)
 }
 
-export function getDecks () {
-    return AsyncStorage.getItem(FLASHCARDS_KEY)
-    .then( (results) => JSON.parse(results) )
-}
-
-export function getDeck (title) {
-    return AsyncStorage.getItem(FLASHCARDS_KEY)
-        .then( (decks) => JSON.parse(decks)[title] )
-}
-
-export function addCardToDeck(title, card) {
-    getDeck(title)
-    .then((deck) => {
-        return AsyncStorage.mergeItem(FLASHCARDS_KEY, JSON.stringify({
-            [title]: {
-                'title' : title,
-                'cards' : [...deck.cards, card]
-            } 
-        }))
-    })
+export function setInitialDecks () {
+    return AsyncStorage.setItem(FLASHCARDS_KEY, JSON.stringify(initialDecks))
 }

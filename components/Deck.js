@@ -7,12 +7,12 @@ import TextButton from './TextButton'
 
 class Deck extends Component {
     render () {
-        const title = this.props.navigation.state.params.title
+        const { title, cards } = this.props.navigation.state.params
         return (
             <View>
                 <DeckDetail 
                     title={title}
-                    questions={this.props.navigation.state.params.questions} />
+                    cards={cards} />
                 <TextButton 
                     onPress={() => this.props.navigation.navigate('NewCard',{ title })}
                     style={{margin: 20}}>
@@ -25,3 +25,4 @@ class Deck extends Component {
 
 export default Deck
     
+ 

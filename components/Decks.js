@@ -1,5 +1,5 @@
 import React , { Component } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import DeckDetail from './DeckDetail'
 import { getDecks } from '../utils/api'
 import { AppLoading } from 'expo'
@@ -15,37 +15,15 @@ class Decks extends Component {
       
     componentDidMount () {
       const { dispatch } = this.props
-
+      
       getDecks()
         .then((decks) => dispatch(receiveDecks(decks)))
         .then(() => this.setState(() => ({ 
           ready : true 
         })))
+      
     }
-/*
-    getDecks()
-        .then((decks) => { 
-          this.setState(() => ({ decks, ready : true }))
-        })
-      }
-*/
   
-
-        
-    
-/*
-    addDeck = (deck) => {
-        // todo : check that we cannot add a deck with an already existing title !!!!
-        this.setState((state) => {
-            return {
-                ...state,
-                [deck.title] : deck
-            }
-        })
-    }
-
-  */
-    
     render () {
 
       const { decks } = this.props
@@ -54,19 +32,19 @@ class Decks extends Component {
       if (ready === false)  {
         return <AppLoading />
       }
-      
-      return (         
+
+      return (
         <View>
           {Object.keys(decks).map((key) => {
-            const { title, questions } = decks[key]
+            const { title, cards } = decks[key]
             return (
               <TouchableOpacity 
-                onPress={() => this.props.navigation.navigate('Deck',{ title, questions })}
+                onPress={() => this.props.navigation.navigate('Deck',{ title, cards })}
                 key={title} >
                 <DeckDetail
                   key={title}
                   title={title}
-                  questions={questions}
+                  cards={cards}
                 />
               </TouchableOpacity>
             )
@@ -74,6 +52,7 @@ class Decks extends Component {
         </View> 
       )
     }
+    
 }
 
 function mapStateToProps (decks) {

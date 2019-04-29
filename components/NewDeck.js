@@ -17,8 +17,10 @@ class NewDeck extends Component {
 
     submit = () => {
         const { title }  = this.state
+        const deck = {[title]: {title, 'cards':[]}}
 
-        this.props.dispatch(addDeck(title))
+        // Update redux
+        this.props.dispatch(addDeck(deck))
         this.setState(() => ({
             title: ''
         }))
@@ -26,6 +28,7 @@ class NewDeck extends Component {
         // Navigate to home
         this.props.navigation.goBack()
         
+        // Save to "DB"
         saveDeckTitle(title)
 
     }

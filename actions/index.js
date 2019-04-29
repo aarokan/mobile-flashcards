@@ -1,5 +1,6 @@
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const ADD_DECK = 'ADD_DECK'
+export const REMOVE_DECKS = 'REMOVE_DECKS'
 
 export function receiveDecks (decks) {
     return {
@@ -8,9 +9,15 @@ export function receiveDecks (decks) {
     }
 }
 
-export function addDeck (title) {
+export function addDeck (deck) {
     return {
         type: ADD_DECK,
-        title
+        deck
+    }
+}
+
+export function removeDecks () {
+    return {
+        type: REMOVE_DECKS
     }
 }
