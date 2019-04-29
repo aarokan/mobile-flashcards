@@ -1,11 +1,10 @@
 import React , { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, ScrollView, TouchableOpacity } from 'react-native'
 import DeckDetail from './DeckDetail'
 import { getDecks } from '../utils/api'
 import { AppLoading } from 'expo'
 import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
-
 
 class Decks extends Component {
 
@@ -25,7 +24,6 @@ class Decks extends Component {
     }
   
     render () {
-
       const { decks } = this.props
       const { ready } = this.state
       
@@ -34,7 +32,7 @@ class Decks extends Component {
       }
 
       return (
-        <View>
+        <ScrollView>
           {Object.keys(decks).map((key) => {
             const { title, cards } = decks[key]
             return (
@@ -42,14 +40,14 @@ class Decks extends Component {
                 onPress={() => this.props.navigation.navigate('Deck',{ title, cards })}
                 key={title} >
                 <DeckDetail
-                  key={title}
                   title={title}
                   cards={cards}
                 />
               </TouchableOpacity>
             )
           })}
-        </View> 
+
+        </ScrollView> 
       )
     }
     
@@ -62,3 +60,4 @@ function mapStateToProps (decks) {
 }
 
 export default connect(mapStateToProps)(Decks)
+

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, KeyboardAvoidingView, TextInput } from 'react-native' 
+import { StyleSheet, View, KeyboardAvoidingView, TextInput } from 'react-native' 
 import TextButton from './TextButton'
 import { addCardToDeck, getDecks } from '../utils/api'
 import { NavigationActions } from 'react-navigation'
@@ -52,21 +52,26 @@ class NewCard extends Component {
     render () {
         const { question, answer } = this.state
         return (
-            <KeyboardAvoidingView style={styles.container}>
-                <TextInput
-                    value={question}
-                    style={styles.input}
-                    onChangeText={this.handleQuestionChange}/>
-                <TextInput
-                    value={answer}
-                    style={styles.input}
-                    onChangeText={this.handleAnswerChange}/>
+            <View>
+                <KeyboardAvoidingView style={styles.container}>
+                    <TextInput
+                        value={question}
+                        style={styles.input}
+                        onChangeText={this.handleQuestionChange}/>
+                </KeyboardAvoidingView>
+                <KeyboardAvoidingView>
+                    <TextInput
+                        value={answer}
+                        style={styles.input}
+                        onChangeText={this.handleAnswerChange}/>
+                </KeyboardAvoidingView>
                 <TextButton 
-                  onPress={() => {this.submit(question, answer)}}
-                  style={{margin: 20}}>
-                  SUBMIT
+                    onPress={() => {this.submit(question, answer)}}
+                    style={{margin: 20}}>
+                    SUBMIT
                 </TextButton>
-            </KeyboardAvoidingView>
+            </View>
+            
         )
     }
 }
