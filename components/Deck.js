@@ -14,8 +14,11 @@ class Deck extends Component {
                     title={title}
                     cards={cards} />
                 <TextButton 
-                    onPress={() => this.props.navigation.navigate('NewCard',{ title })}
-                    style={{margin: 20}}>
+                    onPress={() => this.props.navigation.navigate('Quizz',{ title })}>
+                    START QUIZZ
+                </TextButton>
+                <TextButton 
+                    onPress={() => this.props.navigation.navigate('NewCard',{ title })}>
                     ADD CARD
                 </TextButton>
             </View>

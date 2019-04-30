@@ -11,6 +11,14 @@ export const initialDecks = {
         {
           question: 'Where do you make Ajax requests in React?',
           answer: 'The componentDidMount lifecycle event'
+        },
+        {
+          question: 'What is composition?',
+          answer: 'Combining simple functions together to create complex functions'
+        },
+        {
+          question: 'How does one use composition with React?',
+          answer: 'React buids up pieces of UI using components. Simple components can be combined (composed) to form more complex components.'
         }
       ]
     },

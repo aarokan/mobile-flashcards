@@ -5,6 +5,7 @@ import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
 import NewCard from './components/NewCard'
 import ClearAll from './components/ClearAll'
+import Quizz from './components/Quizz'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { purple, white } from './utils/colors'
 import { FontAwesome } from '@expo/vector-icons'
@@ -78,6 +79,15 @@ const MainNavigator = StackNavigator({
   },
   NewCard: {
     screen: NewCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }
+  },
+  Quizz: {
+    screen: Quizz,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {

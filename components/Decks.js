@@ -5,6 +5,7 @@ import { getDecks } from '../utils/api'
 import { AppLoading } from 'expo'
 import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
+import { floralWhite } from '../utils/colors'
 
 class Decks extends Component {
 
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   },
   item : {
     paddingBottom: 6,
-    backgroundColor: '#fffaf0',
+    backgroundColor: floralWhite,
     margin: 10,
     borderRadius: 10,
   }
