@@ -25,8 +25,8 @@ class NewDeck extends Component {
             title: ''
         }))
 
-        // Navigate to home
-        this.props.navigation.goBack()
+        // Navigate to Deck
+        this.props.navigation.navigate('Deck', {title, cards:[]})
         
         // Save to "DB"
         saveDeckTitle(title)

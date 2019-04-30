@@ -1,5 +1,5 @@
 import React , { Component } from 'react'
-import { View, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, ScrollView, TouchableOpacity, StyleSheet, Animated } from 'react-native'
 import DeckDetail from './DeckDetail'
 import { getDecks } from '../utils/api'
 import { AppLoading } from 'expo'
@@ -10,7 +10,8 @@ import { floralWhite } from '../utils/colors'
 class Decks extends Component {
 
     state = {  
-      ready : false
+      ready : false,
+      bounceValue: new Animated.Value(1)
     }
       
     componentDidMount () {
@@ -23,10 +24,19 @@ class Decks extends Component {
         })))
       
     }
+
+    toDeck = (title, cards) => {
+      const { bounceValue } = this.state
+      
+      Animated.sequence([
+        Animated.timing(bounceValue, {duration: 180, toValue: 1.04}),
+        Animated.spring(bounceValue, {toValue: 1, friction: 4})  
+      ]).start(() => { this.props.navigation.navigate('Deck',{ title, cards })})  
+    } 
   
     render () {
       const { decks } = this.props
-      const { ready } = this.state
+      const { ready, bounceValue } = this.state
       
       if (ready === false)  {
         return <AppLoading />
@@ -37,15 +47,15 @@ class Decks extends Component {
           {Object.keys(decks).map((key) => {
             const { title, cards } = decks[key]
             return (
-              <View style={styles.item} key={title}>
+              <Animated.View style={[styles.item, {transform: [{scale: bounceValue}]}]} key={title}>
                 <TouchableOpacity 
-                  onPress={() => this.props.navigation.navigate('Deck',{ title, cards })} >
+                  onPress={() => this.toDeck(title, cards)} >
                   <DeckDetail
                     title={title}
                     cards={cards}
                   />
                 </TouchableOpacity>
-              </View>
+              </Animated.View>
             )
           })}
 

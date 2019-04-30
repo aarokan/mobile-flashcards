@@ -52,7 +52,7 @@ class Quizz extends Component {
         }))
     }
 
-    getText = (isQuestion, question, answer) => {
+    getText = (isQuestion, question, answer, remaining) => {
         return (
             isQuestion === true 
             ?(<View style={styles.questionContainer}>
@@ -61,6 +61,9 @@ class Quizz extends Component {
                 <TouchableOpacity onPress={this.toggleQuestionAnswer}>
                     <Text style={styles.toggle}>Answer</Text>
                 </TouchableOpacity>
+                <Text style={styles.questionLabel}>
+                    {`# Remaining Questions : ${remaining} `}
+                </Text>
             </View>)
             :(<View style={styles.questionContainer}>
                 <Text style={styles.questionLabel}>Answer</Text>
@@ -68,6 +71,9 @@ class Quizz extends Component {
                 <TouchableOpacity onPress={this.toggleQuestionAnswer}>
                     <Text style={styles.toggle}>Question</Text>
                 </TouchableOpacity>
+                <Text style={styles.questionLabel}>
+                    {`# Remaining Questions : ${remaining} `}
+                </Text>
             </View>)
         )
     }
@@ -78,10 +84,11 @@ class Quizz extends Component {
         if (index < cards.length) {
             const question = cards[index].question
             const answer = cards[index].answer
+            const remaining = cards.length - index - 1
         
             return (
                 <View style={styles.container}>
-                    {this.getText(isQuestion, question, answer)}
+                    {this.getText(isQuestion, question, answer,remaining)}
                     <View style={styles.questionButtons}>
                         <TextButton 
                             onPress={() => this.setIndex(true)}
@@ -144,6 +151,7 @@ const styles = StyleSheet.create({
     questionLabel: {
         color: gray,
         fontSize: 13,
+        paddingTop: 10,
     },
     toggle: {
         color: purple,

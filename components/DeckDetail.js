@@ -1,5 +1,5 @@
 import React from 'react'
-import { purple } from '../utils/colors'
+import { purple, floralWhite } from '../utils/colors'
 import { View, Text, StyleSheet } from 'react-native'
 
 export default function DeckDetail ({ title, cards }) {
@@ -16,8 +16,11 @@ export default function DeckDetail ({ title, cards }) {
 
 const styles = StyleSheet.create({
    deckDetail : {
+       backgroundColor: floralWhite,
        alignItems: 'center',
        padding: 15,
+       margin: 10,
+       borderRadius: 10,
    },
    titleText: {
     fontSize: 20,
