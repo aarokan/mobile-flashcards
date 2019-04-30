@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import TextButton from './TextButton'
-import { purple, gray, floralWhite } from '../utils/colors'
+import { purple, gray, red, green } from '../utils/colors'
 
 class Quizz extends Component {
     state = {
@@ -83,10 +83,14 @@ class Quizz extends Component {
                 <View style={styles.container}>
                     {this.getText(isQuestion, question, answer)}
                     <View style={styles.questionButtons}>
-                        <TextButton onPress={() => this.setIndex(true)}>
+                        <TextButton 
+                            onPress={() => this.setIndex(true)}
+                            style={{backgroundColor:green}}>
                             CORRECT 
                         </TextButton>
-                        <TextButton onPress={() => this.setIndex(false)}>
+                        <TextButton 
+                            onPress={() => this.setIndex(false)}
+                            style={{backgroundColor:red}}>
                             INCORRECT 
                         </TextButton>
                     </View>
