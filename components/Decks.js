@@ -1,5 +1,5 @@
 import React , { Component } from 'react'
-import { View, ScrollView, TouchableOpacity, StyleSheet, Animated } from 'react-native'
+import { ScrollView, TouchableOpacity, StyleSheet, Animated } from 'react-native'
 import DeckDetail from './DeckDetail'
 import { getDecks } from '../utils/api'
 import { AppLoading } from 'expo'

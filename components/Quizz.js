@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import TextButton from './TextButton'
 import { purple, gray, red, green } from '../utils/colors'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class Quizz extends Component {
     state = {
@@ -105,6 +106,10 @@ class Quizz extends Component {
             )
         }
         else {
+            if (Platform.OS === 'android') {
+                clearLocalNotification()
+                .then(setLocalNotification)
+            }
             return (
                 <View style={styles.container}>
                     <View>
